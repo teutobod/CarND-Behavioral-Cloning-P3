@@ -1,21 +1,6 @@
 # **Behavioral Cloning**
 
-**Behavioral Cloning Project**
-
-The goals / steps of this project are the following:
-* Use the simulator to collect data of good driving behavior
-* Build, a convolution neural network in Keras that predicts steering angles from images
-* Train and validate the model with a training and validation set
-* Test that the model successfully drives around track one without leaving the road
-* Summarize the results with a written report
-
-[//]: # (Image References)
-
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]:./images/nvidia_cnn-architecture-624x890.png "nVidia"
-
-
-#### 1. Overview
+### Overview
 
 My project includes the following files:
 * **model.py** containing the code to collect the training data and train the model.
@@ -87,7 +72,7 @@ Non-trainable params: 0
 
 ### Data Collection and Training Strategy
 
-#### 1. Creation of the Training data
+#### 1. Creation of the training data
 Training data was chosen to keep the vehicle driving on the road. I used a combination of the data provided by Udacity and data derived from the first track driving by myself.
 
 To capture good driving behavior, I first recorded a few laps using center lane driving. To generalize the training I also recorded some data while driving in the opposite direction. The following three exemplary data samples are images taken from the left, center and right camera perspective at the same point in time:
@@ -116,29 +101,28 @@ The following histogram plot shows a summary of the full data used for training 
 
 The histogram clearly shows that the data has is strongly biased towards small steering angles (peak around 0.00). This was somehow expected because track one has many straight road sections. The two data peaks at -0.25 and 0.25 come from the fact that the steering angle for the left and right camera image was calculated by adding a constant offset of +/- 0.25 to measured angle (see [model.py line 14](model.py#L14-L15)).
 
-### 2. Training process
+#### 2. Training process
 Before training the model the whole set of sample data (40944) was randomly split into a training set (80% of all samples) and validation set (20% of all samples). The splitting is done in [model.py line 82](model.py#L82).
 
 To keep the overall memory usage low I used as Keras fit_generator and implemented a python generator that provides training data "on the fly" ([model.py line 34-69](model.py#L34-L69).).
 
-##### Attempts to reduce overfitting
 I didn't use any regularization techniques (e.g. Dropout) in the model architecture. To prevent overfitting I trained the model with a relatively low number of epochs (8).
 
 Besides that, the training data was augmented by randomly flipping images and steering angles during the training process ([model.py line 60](model.py#L60)).
 
 To weaken the bias towards low steering angles in the training set I decided to raomly skip samples with low steering angle ([model.py line 51](model.py#L51)).
 
-##### Model parameter tuning
+#### 3. Model parameter tuning
 The model used an adam optimizer, so the learning rate was not tuned manually ([model.py line 75](model.py#L75)).
 
 I chose a batch size of 34 and epoch was 8 ([model.py line 84-86](model.py#L84-L86)).
 
-##### Training results
+#### 4. Training results
 The the training train_history is visualized by the following plot. It shows that the error loss for the training data was constantly decreasing, while the validation error alternated after the sixth training epoch.
 
 ![results](./images/train_history.png)
 
 
-###### Model testing
+#### 5. Model testing
 
-The trained model was tested on track one of the simulator. The file **track1.p4** shows a automated test drive with the the final model.
+The trained model was tested on track one in the simulator. The file [track1.mp4](track1.mp4) shows a video driving in autonomous mode with the the final model.
