@@ -6,7 +6,7 @@ My project includes the following files:
 * **model.py** containing the code to collect the training data and train the model.
 * **cnn.py** containing the code to create the CNN model.
 * **drive.py** for driving the car in autonomous mode.
-* **model.h5** containing a trained CNN model to for driving autonomously.
+* **model_data/model.h5** containing a trained CNN model to for driving autonomously.
 * **driveWithTrainedModel.sh** script to drive the car in autonomous mode using the trained CNN model.
 * **plotTrainingHistory.sh** script to plot the training history data.
 * **track1.mp4** a video recorded while driving one lap with the trained model on track one.
